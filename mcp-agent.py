@@ -33,12 +33,12 @@ async def run(mcp_server: MCPServer):
     
     config = RunConfig(tracing_disabled=True)
 
-    message = "获取北京的天气"
+    message = "获取北京和天津的天气"
     print(f"Running: {message}")
     result = await Runner.run(agent, message, run_config=config)
     print(result.final_output)
 
-    message = "推荐一下这个天气适合的穿搭"
+    message = f'根据天气信息{result.final_output} 推荐一下这个天气适合的穿搭'
     print(f"Running: {message}")
     result = await Runner.run(agent, message, run_config=config, previous_response_id=result.last_response_id)
     print(result.final_output)
