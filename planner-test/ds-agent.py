@@ -5,7 +5,7 @@ from typing import TypedDict
 from langchain_deepseek import ChatDeepSeek
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import HumanMessage, AIMessage
-import os
+import os, uuid
 load_dotenv()
 
 
@@ -92,12 +92,13 @@ memory = MemorySaver()
 agent = grap.compile(checkpointer=memory)
 
 if __name__=="__main__":
-    thread_id = "session-1"
     while True:
         q = input("请输入你的问题，按q退出 \n")
         if q.lower() == "q":
             break
         
-        result = agent.invoke({"user_input": q}, config={"configurable": {"thread_id": thread_id}})
+        rand = uuid.uuid4()
+        print("随机数 ", rand)
+        result = agent.invoke({"user_input": q}, config={"configurable": {"thread_id": rand}})
         print("\n")
         print("*"*40)
